@@ -9,6 +9,7 @@ d_raw <- read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday
 drop_columns <- c('long', 'lat', 'lat_long', 'zip_codes', 
                   'community_districts', 'borough_boundaries', 
                   'city_council_districts', 'police_precincts', 'color_notes')
+
 data <- d_raw %>% select(-drop_columns) %>% 
   mutate(date = mdy(date)) %>% 
   ## combination_of_primary_and_highlight_color has may colors separated by '+'. 
@@ -25,10 +26,10 @@ identifiers <- c('unique_squirrel_id', 'hectare',
                  'color_1', 'color_2', 'color_3', 'location', 
                  'above_ground_sighter_measurement')
 
-# list of activities squirrel was observed doing. 
+# list of activities the squirrels were observed doing. 
 activities <- c('running', 'chasing', 'climbing', 'eating', 'foraging', 'other_activities')
 
-# list of sounds squirrel was observed making.
+# list of sounds squirrels were observed making.
 ## kuks => general musing
 ## quaas => can indicate the presence of a ground predator such as a dog.
 ## moans => can indicate the presence of an air predator such as a hawk.
@@ -38,7 +39,7 @@ sounds <- c('kuks', 'quaas', 'moans')
 ## tails flags and twitches may indicate a predator sighting. 
 tail_signs <- c('tail_flags', 'tail_twitches')
 
-# Human interraction. 
+# Human interractions. 
 interraction <- c('approaches', 'indifferent', 'runs_from', 'other_interactions')
 
 
@@ -52,8 +53,9 @@ d_activity <- data %>%
 
 
 p <- ggplot(data = d_activity, aes(x=Activity, fill=shift)) + 
-  geom_bar(position = 'dodge')
+  geom_bar(position = 'dodge') 
 print(p)
+
 ## Conclusion, Eating and foraging is best done after noon, 
 ## Chasing climbing and running can be done any time. 
 
@@ -64,6 +66,8 @@ print(p)
 # play with it to find correlations, for example 
 # which color squirrels interract better with humans?
 # what kind of squirrels spend more time on the ground
+
+
 
 
 
