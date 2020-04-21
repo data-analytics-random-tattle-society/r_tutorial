@@ -54,7 +54,7 @@ d_activity <- data %>%
 p <- ggplot(data = d_activity, aes(x=Activity, fill=shift)) + 
   geom_bar(position = 'dodge')
 print(p)
-## Conslusion, Eating and foraging is best done after noon, 
+## Conclusion, Eating and foraging is best done after noon, 
 ## Chasing climbing and running can be done any time. 
 
 ### Exerise 2.1
