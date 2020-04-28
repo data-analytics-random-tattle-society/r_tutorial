@@ -21,7 +21,6 @@ data <- d_raw %>% select(-drop_columns) %>%
   replace_with_na(list(color_1 = '', color_2 = '', color_3 = ''))
 
 
-
 squirrel_colors = tibble(Name = c('Gray', 'Cinnamon', 'Black', 'White', NA), color_code = c("#bdbdbd", "#D2691E", "#2e2d2c", "#dbd9d7", "#678aa6"))
 
 data <- left_join(data, squirrel_colors, by = c("primary_fur_color" = "Name") ) 
@@ -57,20 +56,19 @@ d_fur <- data %>%
   # remove all rows with false value
   filter(Value == T) %>% 
   group_by(primary_fur_color, Interaction, color_code) %>%
-  summarize( Population = n() ) %>% ungroup() %>%
+  summarize(Population = n()) %>%
+  ungroup() %>%
   group_by(primary_fur_color) %>%
   mutate(Pct = round(Population*100/sum(Population))) %>%
   ungroup() %>%
   filter(!is.na(primary_fur_color))
 
 
-p <- ggplot(data = d_fur, aes(x=Interaction, y = Pct)) + 
+p <- ggplot(data = d_fur, aes(x=Interaction, y = Pct, fill=color_code)) + 
   # facet_wrap(~primary_fur_color) +
-  geom_bar(stat = 'identity', position = 'dodge', color='black') + 
-  # scale_fill_identity() +
-  theme_minimal() + 
-  theme(
-    axis.text.x = element_text(angle = 45)
-  ) + coord_polar(theta = 'y')
+  geom_bar(stat = 'identity', position = 'dodge') + 
+  scale_fill_identity() +
+  theme_minimal()
 print(p)
+
 
