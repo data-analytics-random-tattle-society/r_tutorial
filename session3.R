@@ -21,11 +21,10 @@ data <- d_raw %>% select(-drop_columns) %>%
   replace_with_na(list(color_1 = '', color_2 = '', color_3 = ''))
 
 
-# squirrel_colors = tibble(
-#   Name = c('Gray'), 
-#   color_code = c("#bdbdbd"))
-# 
-# data <- left_join(data, squirrel_colors, by = c("primary_fur_color" = "Name") ) 
+
+squirrel_colors = tibble(Name = c('Gray', 'Cinnamon', 'Black', 'White', NA), color_code = c("#bdbdbd", "#D2691E", "#2e2d2c", "#dbd9d7", "#678aa6"))
+
+data <- left_join(data, squirrel_colors, by = c("primary_fur_color" = "Name") ) 
 
 identifiers <- c('unique_squirrel_id', 'hectare', 
                  'shift', 'date', 'hectare_squirrel_number', 
@@ -59,7 +58,6 @@ d_fur <- data %>%
   filter(Value == T) %>% 
   group_by(primary_fur_color, Interaction, color_code) %>%
   summarize( Population = n() ) %>% ungroup() %>%
-  ###
   group_by(primary_fur_color) %>%
   mutate(Pct = round(Population*100/sum(Population))) %>%
   ungroup() %>%
