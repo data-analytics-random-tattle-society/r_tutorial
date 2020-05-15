@@ -6,8 +6,8 @@ library(lubridate)
 library(viridisLite)
 
 if(F) {
-  # data_india <- read_csv("https://query.data.world/s/uw2ftil4lmuccp446gxqezh4ot4hrx");
-  data_world <- read_csv("https://query.data.world/s/edupprs3qxblrihhg3cqlgtcintzer");
+  data_india <- read_csv("https://query.data.world/s/uw2ftil4lmuccp446gxqezh4ot4hrx");
+  # data_world <- read_csv("https://query.data.world/s/edupprs3qxblrihhg3cqlgtcintzer");
 }
 
 df <- as_tibble(data_world) %>% clean_names() %>% mutate(dt = ymd(dt)) 
