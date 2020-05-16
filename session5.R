@@ -5,7 +5,7 @@ library(janitor)
 library(lubridate)
 library(viridisLite)
 library(stringi)
-
+library(scales)
 
 ## People 
 names <- c('Sattu', 'Vivek', 'Rishi', 'Bhaskar', 'Rohit', 'Ragini', 'Rahul')
@@ -26,8 +26,8 @@ b <- read_csv('./datasets/books/book_data.csv', col_types = cols(book_isbn = col
 books <- b %>% 
   select(c('b_id', 'book_authors', "book_rating", "book_title", "genres")) %>%
   separate(genres, into = paste('g', (1:5), sep = '_'), sep = "([\\|])", extra="drop") %>%
-  pivot_longer(-c(b_id, book_authors, book_rating, book_title), 
-               names_to = 'g', 
+  pivot_longer(-c(b_id, book_authors, book_rating, book_title),
+               names_to = 'g',
                values_to = 'genre',
                values_drop_na = T) %>% 
   select(-c(g))
@@ -56,17 +56,11 @@ user_author_summary <- user_books_genre %>%
 
 t <- theme(text=element_text(family="Proxima Nova"))
 
-p <- ggplot(data = user_genre_summary, aes(x = reorder(genre, count), y = count)) +
-  geom_bar(stat = 'identity', color = 'white', fill = 'lightblue') +
-  facet_wrap(~user_name, scales = 'free') +
+p <- ggplot(data = user_genre_summary, aes(x = reorder(genre, count), y = count, fill = user_name)) +
+  geom_bar(stat = 'identity', color = 'white') +
+  # facet_wrap(~user_name, scales = 'free') +
   coord_flip() + 
   scale_y_continuous(breaks = pretty_breaks()) +
   theme_minimal() + t
 
 print(p)
-
-
-
-
-
-
